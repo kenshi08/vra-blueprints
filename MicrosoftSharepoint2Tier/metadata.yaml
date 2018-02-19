@@ -1,0 +1,39 @@
+name: "auto-generated-pkg-26cafb06-bfe6-4818-9ff4-a5687dfbf795"
+productVersion: "7.3.0-SNAPSHOT"
+data:
+- locator: "composite-blueprint/MicrosoftSharepoint2Tier.yaml"
+  name: "Microsoft Sharepoint 2-Tier"
+  description: "Microsoft Sharepoint 2-Tier"
+  dependencies:
+  - "software-component/Software.MicrosoftSharePoint2013VMwareSamplebackup.yaml"
+  - "software-component/Software.MicrosoftNETFramework45.yaml"
+  - "software-component/Software.MicrosoftSQLServer2012.yaml"
+  - "software-component/Software.MicrosoftInternetInformationServerIISVMwareSamplebackup.yaml"
+- locator: "software-component/Software.MicrosoftNETFramework45.yaml"
+  name: "Microsoft .NET Framework 4.5"
+  description: ".NET Framework 4.5 is a software framework developed by Microsoft\
+    \ that runs primarily on Microsoft Windows. It includes a large class library\
+    \ known as Framework Class Library (FCL) and provides language interoperability\
+    \ (each language can use code written in other languages) across several programming\
+    \ languages."
+- locator: "software-component/Software.MicrosoftSQLServer2012.yaml"
+  name: "Microsoft SQL Server 2012"
+  description: "Microsoft SQL Server 2012 is a relational database management system\
+    \ developed by Microsoft. As a database server, it is a software product with\
+    \ the primary function of storing and retrieving data as requested by other software\
+    \ applications which may run either on the same computer or on another computer\
+    \ across a network (including the Internet)."
+- locator: "software-component/Software.MicrosoftSharePoint2013VMwareSamplebackup.yaml"
+  name: "Microsoft SharePoint 2013"
+  description: "Microsoft SharePoint Server 2013. You can use it as a secure place\
+    \ to store, organize, share, and access information from almost any device. All\
+    \ you need is a web browser, such as Internet Explorer, Chrome, or Firefox."
+- locator: "software-component/Software.MicrosoftInternetInformationServerIISVMwareSamplebackup.yaml"
+  name: "Microsoft  Internet Information Server (IIS)"
+  description: "Internet Information Services (IIS, formerly Internet Information\
+    \ Server) is an extensible web server created by Microsoft for use with Windows\
+    \ NT family.IIS supports HTTP, HTTPS, FTP, FTPS, SMTP and NNTP. It has been an\
+    \ integral part of the Windows NT family since Windows NT 4.0, though it may be\
+    \ absent from some editions (e.g. Windows XP Home edition), and is not active\
+    \ by default."
+exportTime: "2018-02-19T05:37:54.851Z"

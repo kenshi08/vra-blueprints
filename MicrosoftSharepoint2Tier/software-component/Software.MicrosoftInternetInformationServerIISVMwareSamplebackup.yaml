@@ -1,0 +1,56 @@
+'@type': "SoftwareComponentType"
+createdDate: "2017-05-04T07:08:47.717Z"
+lastUpdated: "2017-05-04T07:08:47.990Z"
+id: "Software.MicrosoftInternetInformationServerIISVMwareSamplebackup"
+name: "Microsoft  Internet Information Server (IIS)"
+description: "Internet Information Services (IIS, formerly Internet Information Server)\
+  \ is an extensible web server created by Microsoft for use with Windows NT family.IIS\
+  \ supports HTTP, HTTPS, FTP, FTPS, SMTP and NNTP. It has been an integral part of\
+  \ the Windows NT family since Windows NT 4.0, though it may be absent from some\
+  \ editions (e.g. Windows XP Home edition), and is not active by default."
+publishStatus: "PUBLISHED"
+publishStatusName: "Published"
+schema:
+  fields:
+  - id: "host"
+    label: ""
+    description: ""
+    dataType:
+      type: "ref"
+      componentTypeId: "com.vmware.csp.iaas.blueprint.service"
+      classId: "Infrastructure.Machine.Schema"
+      label: "Machine"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "internal"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: true
+      - type: "visible"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: false
+    isMultiValued: false
+containerFieldId: "host"
+lifecycleTasks:
+- createdDate: "2017-05-04T07:08:47.719Z"
+  lastUpdated: "2017-05-04T07:08:47.719Z"
+  script:
+    scriptContent: "#\n# Install IIS Server Role\n#\n\nImport-Module ServerManager\n\
+      Install-WindowsFeature -Name Web-Server -IncludeAllSubFeature\n\n# End of Script"
+    isRebootAfter: true
+    scriptTypeId: "powershell"
+  taskDescriptorRef:
+    id: "INSTALL"
+    label: "Install"

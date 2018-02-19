@@ -1,0 +1,55 @@
+'@type': "SoftwareComponentType"
+createdDate: "2017-05-04T07:08:48.429Z"
+lastUpdated: "2017-05-04T07:08:48.526Z"
+id: "Software.MicrosoftNETFramework45"
+name: "Microsoft .NET Framework 4.5"
+description: ".NET Framework 4.5 is a software framework developed by Microsoft that\
+  \ runs primarily on Microsoft Windows. It includes a large class library known as\
+  \ Framework Class Library (FCL) and provides language interoperability (each language\
+  \ can use code written in other languages) across several programming languages."
+publishStatus: "PUBLISHED"
+publishStatusName: "Published"
+schema:
+  fields:
+  - id: "host"
+    label: ""
+    description: ""
+    dataType:
+      type: "ref"
+      componentTypeId: "com.vmware.csp.iaas.blueprint.service"
+      classId: "Infrastructure.Machine.Schema"
+      label: "Machine"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "internal"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: true
+      - type: "visible"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: false
+    isMultiValued: false
+containerFieldId: "host"
+lifecycleTasks:
+- createdDate: "2017-05-04T07:08:48.429Z"
+  lastUpdated: "2017-05-04T07:08:48.429Z"
+  script:
+    scriptContent: "#\n# Install .Net Framework 4.5\n#\n\nImport-Module ServerManager\n\
+      Install-WindowsFeature Net-Framework-45-Core\n\n# End of Script"
+    isRebootAfter: true
+    scriptTypeId: "powershell"
+  taskDescriptorRef:
+    id: "INSTALL"
+    label: "Install"
