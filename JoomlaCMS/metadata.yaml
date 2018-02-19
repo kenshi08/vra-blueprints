@@ -1,0 +1,37 @@
+name: "auto-generated-pkg-91d81b2b-8945-4de3-85d4-5d67f0db656f"
+productVersion: "7.3.0-SNAPSHOT"
+data:
+- locator: "composite-blueprint/JoomlaCMS.yaml"
+  name: "Joomla CMS"
+  description: "Joomla CMS"
+  dependencies:
+  - "software-component/Software.PHPService.yaml"
+  - "software-component/Software.SystemConfiguration.yaml"
+  - "software-component/Software.MySql.yaml"
+  - "software-component/Software.ApacheServices.yaml"
+  - "software-component/Software.JoomlaServices.yaml"
+  - "software-component/Software.JoomlaDatabase.yaml"
+- locator: "software-component/Software.PHPService.yaml"
+  name: "PHP Service"
+- locator: "software-component/Software.JoomlaDatabase.yaml"
+  name: "Joomla Database"
+  description: "Creates a Joomla DB User and PW, creates a Joomla DB on MySQL DB,\
+    \ and grants the user access to the DB."
+  dependencies:
+  - "software-component/Software.MySql.yaml"
+- locator: "software-component/Software.MySql.yaml"
+  name: "MySQL Database"
+  description: "MySQL installation and configuration."
+- locator: "software-component/Software.ApacheServices.yaml"
+  name: "Apache Services"
+  description: "Installs Apache web server, changes owner of /var/www/html to apache.apache,\
+    \ and starts the apache web service"
+- locator: "software-component/Software.SystemConfiguration.yaml"
+  name: "System Configuration"
+- locator: "software-component/Software.JoomlaServices.yaml"
+  name: "Joomla Service"
+  description: "Downloads and installs Joomla Open Source Content Management System.\
+    \ Must specify version! \nIE 3.6.5"
+  dependencies:
+  - "software-component/Software.ApacheServices.yaml"
+exportTime: "2018-02-19T05:20:39.443Z"

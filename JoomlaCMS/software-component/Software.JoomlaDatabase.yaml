@@ -1,0 +1,175 @@
+'@type': "SoftwareComponentType"
+createdDate: "2017-05-07T13:14:42.964Z"
+lastUpdated: "2017-05-07T13:14:43.094Z"
+id: "Software.JoomlaDatabase"
+name: "Joomla Database"
+description: "Creates a Joomla DB User and PW, creates a Joomla DB on MySQL DB, and\
+  \ grants the user access to the DB."
+publishStatus: "PUBLISHED"
+publishStatusName: "Published"
+schema:
+  fields:
+  - id: "joomla_db_user"
+    label: "joomla_db_user"
+    description: "Name of user for access to joomla DB"
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "joomlauser"
+    isMultiValued: false
+  - id: "dbpassword"
+    label: "dbpassword"
+    description: "DB Admin Password"
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "encrypted"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: false
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "vmware"
+    isMultiValued: false
+  - id: "host"
+    label: "Container"
+    description: ""
+    dataType:
+      type: "ref"
+      componentTypeId: "com.vmware.csp.component.software.service"
+      classId: "softwareResourceType"
+      typeFilter: "Software.MySql"
+      label: "MySQL Database"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "internal"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: true
+      - type: "visible"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: false
+    isMultiValued: false
+  - id: "joomla_db_name"
+    label: "joomla_db_name"
+    description: "Name of database to create for Joomla"
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "joomla"
+    isMultiValued: false
+  - id: "joomla_db_user_pw"
+    label: "joomla_db_user_pw"
+    description: "Password for Joomla DB User"
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "vmware"
+    isMultiValued: false
+  - id: "dbuser"
+    label: "dbuser"
+    description: "DB Admin User"
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "root"
+    isMultiValued: false
+containerFieldId: "host"
+lifecycleTasks:
+- createdDate: "2017-05-07T13:14:42.967Z"
+  lastUpdated: "2017-05-07T13:18:14.566Z"
+  script:
+    scriptContent: "#!/bin/bash\n/usr/bin/mysql -e \"CREATE DATABASE $joomla_db_name;\"\
+      \ --user=$dbuser --password=$dbpassword\n/usr/bin/mysql -e \"CREATE USER '$joomla_db_user'@'%';\"\
+      \ --user=$dbuser --password=$dbpassword\n/usr/bin/mysql -e \"SET PASSWORD FOR\
+      \ '$joomla_db_user'@'%'=PASSWORD('$joomla_db_user_pw');\" --user=$dbuser --password=$dbpassword\n\
+      /usr/bin/mysql -e \"GRANT ALL PRIVILEGES ON $joomla_db_name.* TO '$joomla_db_user'@'%'IDENTIFIED\
+      \ BY '$joomla_db_user_pw';\" --user=$dbuser --password=$dbpassword\n/usr/bin/mysql\
+      \ -e \"FLUSH PRIVILEGES;\" --user=$dbuser --password=$dbpassword"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "INSTALL"
+    label: "Install"

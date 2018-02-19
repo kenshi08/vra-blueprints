@@ -1,0 +1,256 @@
+id: JoomlaCMS
+name: Joomla CMS
+description: Joomla Content Management System
+status: PUBLISHED
+properties:
+  _archiveDays: 30
+components:
+  Apache_Services_1:
+    type: Software.ApacheServices
+    dependsOn:
+    - System_Configuration_1
+    data:
+      host: ${_resource~joomla-web-server}
+  Joomla_Database_1:
+    type: Software.JoomlaDatabase
+    data:
+      dbpassword:
+        fixed: ${MySQL_Database_1~db_root_password}
+        required: true
+        secured: false
+      dbuser:
+        fixed: ${MySQL_Database_1~db_root_username}
+        required: true
+        visible: false
+      host: ${_resource~MySQL_Database_1}
+      joomla_db_name:
+        default: joomla
+        required: true
+        visible: true
+      joomla_db_user:
+        default: joomlauser
+        required: true
+        visible: true
+      joomla_db_user_pw:
+        default: VMware1!
+        required: true
+        visible: true
+  Joomla_Service_1:
+    type: Software.JoomlaServices
+    dependsOn:
+    - Joomla_Database_1
+    data:
+      JOOMLAVERSION:
+        default: 3.6.5
+        required: true
+      JOOMLA_DB_HOST:
+        editable: true
+        fixed: ${_resource~joomla-dbs-serve~ip_address}
+        required: true
+        secured: false
+      JOOMLA_DB_NAME:
+        fixed: ${Joomla_Database_1~joomla_db_name}
+        required: true
+      JOOMLA_DB_PASSWORD:
+        fixed: ${Joomla_Database_1~joomla_db_user_pw}
+        required: true
+        secured: false
+      JOOMLA_DB_USER:
+        fixed: ${Joomla_Database_1~joomla_db_user}
+        required: true
+        secured: false
+      host: ${_resource~Apache_Services_1}
+  MySQL_Database_1:
+    type: Software.MySql
+    dependsOn:
+    - System_Configuration_2
+    data:
+      JAVA_HOME:
+        default: /opt/vmware-jre
+        required: true
+      db_port:
+        default: '3306'
+        required: true
+      db_root_password:
+        default: VMware1!
+        required: true
+        secured: false
+        visible: true
+      db_root_username:
+        default: root
+        required: true
+        visible: true
+      global_ftp_proxy: {}
+      global_http_proxy: {}
+      global_https_proxy: {}
+      host: ${_resource~joomla-dbs-serve}
+      max_allowed_packet:
+        default: 128M
+        required: true
+  PHP_Service_1:
+    type: Software.PHPService
+    dependsOn:
+    - Apache_Services_1
+    - System_Configuration_1
+    data:
+      host: ${_resource~joomla-web-server}
+  PayloadClusterExt:
+    type: Infrastructure.Network.Network.Existing
+    data:
+      name:
+        fixed: PayloadClusterExt
+      network_profile:
+        fixed: PayloadCluster-Ext
+  System_Configuration_1:
+    type: Software.SystemConfiguration
+    data:
+      host: ${_resource~joomla-web-server}
+  System_Configuration_2:
+    type: Software.SystemConfiguration
+    data:
+      host: ${_resource~joomla-dbs-serve}
+  joomla-dbs-serve:
+    type: Infrastructure.CatalogItem.Machine.Virtual.vSphere
+    data:
+      _cluster:
+        default: 1
+        max: 1
+        min: 1
+      action:
+        fixed: LinkedClone
+      allow_storage_policies:
+        fixed: false
+      blueprint_type:
+        fixed: '1'
+      cpu:
+        default: 1
+        max: 2
+        min: 1
+      disks:
+      - capacity: 30
+        custom_properties: null
+        id: 1494162997673
+        initial_location: ''
+        is_clone: true
+        label: Hard disk 1
+        storage_reservation_policy: ''
+        userCreated: false
+        volumeId: 0
+      display_location:
+        fixed: false
+      guest_customization_specification: linux-cust
+      max_network_adapters: 1
+      max_volumes:
+        fixed: 1
+      memory:
+        default: 512
+        max: 1024
+        min: 512
+      nics:
+      - address: ''
+        assignment_type: Static
+        id: 0
+        load_balancing: ''
+        network: ${_resource~PayloadClusterExt}
+        network_profile: PayloadCluster-Ext
+      provisioning_workflow:
+        fixed:
+          id: CloneWorkflow
+          label: CloneWorkflow
+      security_groups: []
+      security_tags: []
+      snapshot_name:
+        fixed: vRA-Base-SS-02
+      source_machine:
+        fixed:
+          id: c89e9063-32e8-4aa1-8f95-43d461905e09
+          label: vRA-CentOS6x64
+      source_machine_external_snapshot:
+        fixed: 2
+      source_machine_name:
+        fixed: vRA-CentOS6x64
+      source_machine_vmsnapshot:
+        fixed:
+          id: '3'
+      storage:
+        default: 30
+        max: 30
+        min: 30
+  joomla-web-server:
+    type: Infrastructure.CatalogItem.Machine.Virtual.vSphere
+    data:
+      _cluster:
+        default: 1
+        max: 1
+        min: 1
+      action:
+        fixed: LinkedClone
+      allow_storage_policies:
+        fixed: false
+      blueprint_type:
+        fixed: '1'
+      cpu:
+        default: 1
+        max: 2
+        min: 1
+      disks:
+      - capacity: 30
+        custom_properties: null
+        id: 1494162954773
+        initial_location: ''
+        is_clone: true
+        label: Hard disk 1
+        storage_reservation_policy: ''
+        userCreated: false
+        volumeId: 0
+      display_location:
+        fixed: false
+      guest_customization_specification: linux-cust
+      max_network_adapters: 1
+      max_volumes:
+        fixed: 1
+      memory:
+        default: 512
+        max: 1024
+        min: 512
+      nics:
+      - address: ''
+        assignment_type: Static
+        id: 0
+        load_balancing: ''
+        network: ${_resource~PayloadClusterExt}
+        network_profile: PayloadCluster-Ext
+      provisioning_workflow:
+        fixed:
+          id: CloneWorkflow
+          label: CloneWorkflow
+      security_groups: []
+      security_tags: []
+      snapshot_name:
+        fixed: vRA-Base-SS-02
+      source_machine:
+        fixed:
+          id: c89e9063-32e8-4aa1-8f95-43d461905e09
+          label: vRA-CentOS6x64
+      source_machine_external_snapshot:
+        fixed: 2
+      source_machine_name:
+        fixed: vRA-CentOS6x64
+      source_machine_vmsnapshot:
+        fixed:
+          id: '3'
+      storage:
+        default: 30
+        max: 30
+        min: 30
+layout:
+  Apache_Services_1: 1,0
+  Joomla_Database_1: 0,0
+  Joomla_Service_1: 0,0
+  MySQL_Database_1: 1,0
+  PHP_Service_1: 2,0
+  PayloadClusterExt: 1,0
+  System_Configuration_1: 0,0
+  System_Configuration_2: 0,0
+  joomla-dbs-serve: 0,1
+  joomla-web-server: 0,0

@@ -1,0 +1,71 @@
+'@type': "SoftwareComponentType"
+createdDate: "2017-05-07T13:14:42.525Z"
+lastUpdated: "2017-05-07T13:14:42.616Z"
+id: "Software.ApacheServices"
+name: "Apache Services"
+description: "Installs Apache web server, changes owner of /var/www/html to apache.apache,\
+  \ and starts the apache web service"
+publishStatus: "PUBLISHED"
+publishStatusName: "Published"
+schema:
+  fields:
+  - id: "host"
+    label: ""
+    description: ""
+    dataType:
+      type: "ref"
+      componentTypeId: "com.vmware.csp.iaas.blueprint.service"
+      classId: "Infrastructure.Machine.Schema"
+      label: "Machine"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "internal"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: true
+      - type: "visible"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: false
+    isMultiValued: false
+containerFieldId: "host"
+lifecycleTasks:
+- createdDate: "2017-05-07T13:14:42.526Z"
+  lastUpdated: "2017-08-13T16:59:03.778Z"
+  script:
+    scriptContent: "#!/bin/bash\n/sbin/service httpd start"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "START"
+    label: "Start"
+- createdDate: "2017-05-07T13:14:42.526Z"
+  lastUpdated: "2017-08-13T16:59:03.778Z"
+  script:
+    scriptContent: "#!/bin/bash\n/usr/bin/yum install httpd -y"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "INSTALL"
+    label: "Install"
+- createdDate: "2017-05-07T13:14:42.527Z"
+  lastUpdated: "2017-08-13T16:59:03.778Z"
+  script:
+    scriptContent: "#!/bin/bash\n/sbin/chkconfig httpd on\n/bin/chown apache.apache\
+      \ /var/www -R"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "CONFIGURE"
+    label: "Configure"
