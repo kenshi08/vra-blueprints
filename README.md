@@ -1,2 +1,2 @@
-# vra-blueprints
-VMware vRealize Automation Blueprints
+# VMware vRealize Automation Blueprints
+
