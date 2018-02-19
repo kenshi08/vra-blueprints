@@ -1,0 +1,37 @@
+name: "auto-generated-pkg-6e96299a-ddd3-4a99-9b70-96d78a37b511"
+productVersion: "7.3.0-SNAPSHOT"
+data:
+- locator: "composite-blueprint/JoomlaCMSonAWS.yaml"
+  name: "Joomla CMS on AWS"
+  description: "Joomla CMS on AWS"
+  dependencies:
+  - "software-component/Software.PHPService.yaml"
+  - "software-component/Software.MySql.yaml"
+  - "software-component/Software.ApacheServices.yaml"
+  - "software-component/Software.JoomlaServices.yaml"
+  - "software-component/Software.SysconfigEC2.yaml"
+  - "software-component/Software.JoomlaDatabase.yaml"
+- locator: "software-component/Software.SysconfigEC2.yaml"
+  name: "Sysconfig-EC2"
+- locator: "software-component/Software.PHPService.yaml"
+  name: "PHP Service"
+- locator: "software-component/Software.JoomlaDatabase.yaml"
+  name: "Joomla Database"
+  description: "Creates a Joomla DB User and PW, creates a Joomla DB on MySQL DB,\
+    \ and grants the user access to the DB."
+  dependencies:
+  - "software-component/Software.MySql.yaml"
+- locator: "software-component/Software.MySql.yaml"
+  name: "MySQL Database"
+  description: "MySQL installation and configuration."
+- locator: "software-component/Software.ApacheServices.yaml"
+  name: "Apache Services"
+  description: "Installs Apache web server, changes owner of /var/www/html to apache.apache,\
+    \ and starts the apache web service"
+- locator: "software-component/Software.JoomlaServices.yaml"
+  name: "Joomla Service"
+  description: "Downloads and installs Joomla Open Source Content Management System.\
+    \ Must specify version! \nIE 3.6.5"
+  dependencies:
+  - "software-component/Software.ApacheServices.yaml"
+exportTime: "2018-02-19T05:33:13.532Z"

@@ -1,0 +1,200 @@
+'@type': "SoftwareComponentType"
+createdDate: "2017-05-07T13:14:42.743Z"
+lastUpdated: "2017-05-07T13:14:42.859Z"
+id: "Software.JoomlaServices"
+name: "Joomla Service"
+description: "Downloads and installs Joomla Open Source Content Management System.\
+  \ Must specify version! \nIE 3.6.5"
+publishStatus: "PUBLISHED"
+publishStatusName: "Published"
+schema:
+  fields:
+  - id: "JOOMLA_DB_PASSWORD"
+    label: "JOOMLA_DB_PASSWORD"
+    description: ""
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "encrypted"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: false
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "vmware"
+    isMultiValued: false
+  - id: "host"
+    label: "Container"
+    description: ""
+    dataType:
+      type: "ref"
+      componentTypeId: "com.vmware.csp.component.software.service"
+      classId: "softwareResourceType"
+      typeFilter: "Software.ApacheServices"
+      label: "Apache Services"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "internal"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: true
+      - type: "visible"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: false
+    isMultiValued: false
+  - id: "JOOMLA_DB_HOST"
+    label: "JOOMLA_DB_HOST"
+    description: ""
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "localhost"
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "encrypted"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: false
+      - type: "editable"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+    isMultiValued: false
+  - id: "JOOMLAVERSION"
+    label: "JOOMLAVERSION"
+    description: "Joomla Version (IE: 3.6.5)"
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "3.6.5"
+    isMultiValued: false
+  - id: "JOOMLA_DB_USER"
+    label: "JOOMLA_DB_USER"
+    description: ""
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "joomlauser"
+    isMultiValued: false
+  - id: "JOOMLA_DB_NAME"
+    label: "JOOMLA_DB_NAME"
+    description: ""
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+      - type: "defaultValue"
+        value:
+          type: "constant"
+          value:
+            type: "string"
+            value: "joomla"
+    isMultiValued: false
+containerFieldId: "host"
+lifecycleTasks:
+- createdDate: "2017-05-07T13:14:42.745Z"
+  lastUpdated: "2017-05-07T13:14:42.745Z"
+  script:
+    scriptContent: "#!/bin/bash\necho DB Name: $JOOMLA_DB_NAME\necho DB User: $JOOMLA_DB_USER\n\
+      echo DB User PW: $JOOMLA_DB_PASSWORD\necho DB Host: $JOOMLA_DB_HOST\n/bin/chown\
+      \ apache.apache /var/www -R\n# /bin/sed -i \"s/$db = \\'\\'/$db = '/\\'$JOOMLA_DB_NAME\\\
+      '/g\" /var/www/html/installation/configuration.php-dist\n# /bin/sed -i \"s/$user\
+      \ = \\'\\'/$user = \\'$JOOMLA_DB_USER\\'/g\" /var/www/html/installation/configuration.php-dist\n\
+      # /bin/sed -i \"s/$password = \\'\\'/$password = \\'$JOOMLA_DB_PASSWORD\\'/g\"\
+      \ /var/www/html/installation/configuration.php-dist\n# /bin/sed -i \"s/$host\
+      \ = \\'localhost\\'/$host = \\'$JOOMLA_DB_HOST\\'/g\" /var/www/html/installation/configuration.php-dist"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "CONFIGURE"
+    label: "Configure"
+- createdDate: "2017-05-07T13:14:42.745Z"
+  lastUpdated: "2017-05-07T13:14:42.745Z"
+  script:
+    scriptContent: "#!/bin/bash\necho \"Downloading Joomla $JOOMLAVERSION \"\ncd /tmp\n\
+      /usr/bin/wget https://github.com/joomla/joomla-cms/releases/download/$JOOMLAVERSION/Joomla_$JOOMLAVERSION-Stable-Full_Package.zip\
+      \ --output-document=/tmp/joomla.zip\n/usr/bin/unzip /tmp/joomla.zip -d /tmp/joomla\n\
+      mv /tmp/joomla/* /var/www/html/"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "INSTALL"
+    label: "Install"
